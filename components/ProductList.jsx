@@ -8,7 +8,10 @@ const ProductList = ({products}) => {
             <h2 className='text-2xl text-center'>Products</h2>
             {
                 products.length > 0 ? products.map((product) => (
-                    <Product product={product}/>
+                    <Product 
+                        key={product.id} 
+                        product={product}
+                    />
                 )) : <p className=' my-3 text-center'>There are no products yet.</p>
             }
         </div>
