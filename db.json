@@ -1,25 +1,46 @@
 {
-    "productos": [
-      {
-        "id": 1,
-        "name": "Producto 1",
-        "price": 123,
-        "code": "abc123",
-        "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta ligula sed justo aliquam, nec egestas lectus rhoncus. Nunc eget quam non ipsum sodales placerat id in ante. Integer pellentesque urna nec metus mattis, in porta orci dignissim."
-      },
-      {
-        "id": 2,
-        "name": "Producto 2",
-        "price": 123,
-        "code": "abc123",
-        "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta ligula sed justo aliquam, nec egestas lectus rhoncus. Nunc eget quam non ipsum sodales placerat id in ante. Integer pellentesque urna nec metus mattis, in porta orci dignissim."
-      },
-      {
-        "id": 3,
-        "name": "Producto 3",
-        "price": 123,
-        "code": "abc123",
-        "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta ligula sed justo aliquam, nec egestas lectus rhoncus. Nunc eget quam non ipsum sodales placerat id in ante. Integer pellentesque urna nec metus mattis, in porta orci dignissim."
-      }
-    ]
-  }
+  "products": [
+    {
+      "id": 1,
+      "name": "Producto 1",
+      "price": 123,
+      "code": "abc123",
+      "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta ligula sed justo aliquam, nec egestas lectus rhoncus. Nunc eget quam non ipsum sodales placerat id in ante. Integer pellentesque urna nec metus mattis, in porta orci dignissim."
+    },
+    {
+      "id": 2,
+      "name": "Producto 2",
+      "price": 123,
+      "code": "abc123",
+      "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta ligula sed justo aliquam, nec egestas lectus rhoncus. Nunc eget quam non ipsum sodales placerat id in ante. Integer pellentesque urna nec metus mattis, in porta orci dignissim."
+    },
+    {
+      "id": 3,
+      "name": "Producto 3",
+      "price": 123,
+      "code": "abc123",
+      "description": "orem ipsum dolor sit amet, consectetur adipiscing elit. Integer porta ligula sed justo aliquam, nec egestas lectus rhoncus. Nunc eget quam non ipsum sodales placerat id in ante. Integer pellentesque urna nec metus mattis, in porta orci dignissim."
+    },
+    {
+      "name": "123",
+      "price": 123,
+      "code": "123",
+      "description": "123",
+      "id": 4
+    },
+    {
+      "name": "123",
+      "price": 123,
+      "code": "123",
+      "description": "123",
+      "id": 5
+    },
+    {
+      "name": "",
+      "price": "",
+      "code": "",
+      "description": "",
+      "id": 6
+    }
+  ]
+}

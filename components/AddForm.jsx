@@ -9,8 +9,6 @@ const AddForm = () => {
 
 
     const dispatch = useDispatch()
-    
-    const addProduct = (values) => dispatch( addProductAction(values) )
 
     const form = useFormik({
         initialValues: {
@@ -20,7 +18,7 @@ const AddForm = () => {
             description: "",
         },
         onSubmit: (values) => {
-            addProduct(values)
+            dispatch( addProductAction(values) )
         }
     });
 
