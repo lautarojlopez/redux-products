@@ -23,3 +23,28 @@ export const addProductAction = (product) => {
         }
     }
 }
+
+export const getProducts = () => { 
+    return async (dispatch) => {
+        try {
+            //Start loading
+            dispatch({
+                type: types.GET_PRODUCTS
+            })
+            //Get products from API
+            const products = await axiosClient.get("/products")
+            
+            //Set products in state
+            dispatch({
+                type: types.GET_PRODUCTS_SUCCESS,
+                payload: products.data
+            })
+
+        } catch (error) {
+            console.log(error);
+            dispatch({
+                type: types.GET_PRODUCTS_ERROR
+            })
+        }
+    }
+}

@@ -25,6 +25,23 @@ export default function(state = initialState, action){
                 loading: false,
                 error: true
             }
+        case types.GET_PRODUCTS:
+            return{
+                ...state,
+                loading: true
+            }
+        case types.GET_PRODUCTS_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                products: action.payload
+            }
+        case types.GET_PRODUCTS_ERROR:
+            return{
+                ...state,
+                loading: false,
+                error: true
+            }
         default:
             return state
     }
