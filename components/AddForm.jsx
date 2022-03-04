@@ -1,6 +1,8 @@
 import React from "react";
-import { useFormik } from "formik";
+import { useFormik, yupToFormErrors } from "formik";
+import * as yup from 'yup'
 import { useDispatch, useSelector } from "react-redux";
+import Error from "./Error";
 
 //Redux actions
 import { addProductAction } from "../redux/actions/productsActions";
@@ -10,6 +12,10 @@ const AddForm = () => {
 
     const dispatch = useDispatch()
 
+    //State values
+    const error = useSelector(state => state.products.error)
+
+
     const form = useFormik({
         initialValues: {
             name: "",
@@ -17,6 +23,12 @@ const AddForm = () => {
             code: "",
             description: "",
         },
+        validationSchema: yup.object({
+            name: yup.string().required("Add a name"),
+            price: yup.string().required("Add a price"),
+            code: yup.string().required("Add a code"),
+            description: yup.string().required("Add a description")
+        }),
         onSubmit: (values) => {
             dispatch( addProductAction(values) )
         }
@@ -25,7 +37,7 @@ const AddForm = () => {
     return (
         <form onSubmit={form.handleSubmit} className="flex flex-col my-5 shadow-lg rounded border border-gray-500 p-5">
             <h2 className="text-center text-2xl">Add New Product</h2>
-
+            {error ? <Error msg="An error has occurred. Please try again."/> : null}
             <div className="my-5">
                 <div className="field">
                     <label htmlFor="name">Name</label>
@@ -35,6 +47,7 @@ const AddForm = () => {
                         value={form.values.name}
                         onChange={form.handleChange}
                     />
+                    {form.errors.name && form.touched.name ? <Error msg={form.errors.name}/> : null}
                 </div>
 
                 <div className="field">
@@ -45,6 +58,7 @@ const AddForm = () => {
                         value={form.values.price}
                         onChange={form.handleChange}
                     />
+                    {form.errors.price && form.touched.price ? <Error msg={form.errors.price}/> : null}
                 </div>
 
                 <div className="field">
@@ -55,6 +69,7 @@ const AddForm = () => {
                         value={form.values.code}
                         onChange={form.handleChange}
                     />
+                    {form.errors.code && form.touched.code ? <Error msg={form.errors.code}/> : null}
                 </div>
 
                 <div className="field">
@@ -68,6 +83,7 @@ const AddForm = () => {
                         value={form.values.description}
                         onChange={form.handleChange}
                     ></textarea>
+                    {form.errors.description && form.touched.description ? <Error msg={form.errors.description}/> : null}
                 </div>
             </div>
 
