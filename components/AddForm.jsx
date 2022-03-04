@@ -88,7 +88,7 @@ const AddForm = () => {
             </div>
 
             <button type="submit" className="btn w-10/12 m-auto">
-                Create
+                Add <i className="fas fa-plus-circle"></i>
             </button>
         </form>
     );

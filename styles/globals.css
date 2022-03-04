@@ -23,6 +23,13 @@ a {
   @apply p-3 text-white text-xl rounded bg-orange-600 hover:bg-orange-500 transition-all duration-150
 }
 
+.btn-delete{
+  @apply p-3 text-white text-xl rounded bg-red-600 hover:bg-red-500 transition-all duration-150
+}
+
+.btn-edit{
+  @apply p-3 text-white text-xl rounded bg-sky-600 hover:bg-sky-500 transition-all duration-150
+}
 
 input[type="text"], input[type="number"]{
   @apply p-2 focus:outline-none border border-gray-500 rounded
