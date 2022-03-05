@@ -66,16 +66,26 @@ export const deleteProductAction = (id) => {
         }).then(async (result) => {
             if (result.isConfirmed) {
                 //Delete product
-                await axiosClient.delete(`/products/${id}`)
-                dispatch({
-                    type: types.DELETE_PRODUCT,
-                    payload: id
-                })
-                Swal.fire(
-                    'Deleted!',
-                    'Your file has been deleted.',
-                    'success'
-                )
+                try {
+                    await axiosClient.delete(`/products/${id}`)
+                    dispatch({
+                        type: types.DELETE_PRODUCT,
+                        payload: id
+                    })
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                } catch (error) {
+                    console.log(error)
+                    Swal.fire(
+                        'Ups...',
+                        'Something went wront. Please try again.',
+                        'error'
+                    )
+                }
+
             }
         })
     }
