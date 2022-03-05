@@ -42,6 +42,11 @@ export default function(state = initialState, action){
                 loading: false,
                 error: true
             }
+        case types.DELETE_PRODUCT:
+            return{
+                ...state,
+                products: state.products.filter(product => product.id !== action.payload)
+            }
         default:
             return state
     }

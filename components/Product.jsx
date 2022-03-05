@@ -1,8 +1,16 @@
 import React from 'react'
+import { useDispatch } from 'react-redux';
+import { deleteProductAction } from '../redux/actions/productsActions';
 
 const Product = ({product}) => {
 
-    const {name, price, code, description} = product
+    const {id, name, price, code, description} = product
+
+    const dispatch = useDispatch()
+
+    const deleteProduct = (id) => { 
+        dispatch(deleteProductAction(id))
+    }
 
     return ( 
         <div className='my-5 shadow rounded border border-gray-500 p-3'>
@@ -13,7 +21,7 @@ const Product = ({product}) => {
 
             <div className='my-3'>
                 <button className='btn-edit mr-3'><i className="fas fa-edit"></i> Edit</button>
-                <button className='btn-delete'><i className="fas fa-trash"></i> Delete</button>
+                <button onClick={() => deleteProduct(id)} className='btn-delete'><i className="fas fa-trash"></i> Delete</button>
             </div>
         </div>
      );
