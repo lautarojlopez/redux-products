@@ -11,7 +11,7 @@ const ProductList = ({ products }) => {
                 {
                     products.length > 0 ? products.map((product) => (
                         <Product
-                            key={product.id}
+                            key={product.code}
                             product={product}
                         />
                     )) : <p className='text-xl my-3 text-center'>There are no products yet.</p>
