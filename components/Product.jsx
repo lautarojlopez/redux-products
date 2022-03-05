@@ -1,6 +1,7 @@
 import React from 'react'
-import { useDispatch } from 'react-redux';
-import { deleteProductAction } from '../redux/actions/productsActions';
+import { useDispatch } from 'react-redux'
+import { deleteProductAction } from '../redux/actions/productsActions'
+import Link from 'next/link'
 
 const Product = ({product}) => {
 
@@ -20,7 +21,7 @@ const Product = ({product}) => {
             <p><span className='font-bold'>Description:</span> {description}</p>
 
             <div className='my-3'>
-                <button className='btn-edit mr-3'><i className="fas fa-edit"></i> Edit</button>
+                <Link href={`/edit/${id}`}><a className='btn-edit mr-3'><i className="fas fa-edit"></i> Edit</a></Link>
                 <button onClick={() => deleteProduct(id)} className='btn-delete'><i className="fas fa-trash"></i> Delete</button>
             </div>
         </div>
