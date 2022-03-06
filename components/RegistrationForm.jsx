@@ -3,25 +3,31 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import Error from '../components/Error'
 import Link from 'next/link'
+import { useDispatch, useSelector } from 'react-redux'
+import { registerUser } from '../redux/actions/authActions'
 
 const LoginForm = () => {
+
+    const dispatch = useDispatch()
 
     const form = useFormik({
 
         initialValues: {
+            name: '',
             email: '',
             password: '',
             verifyPassword: ''
         },
 
         validationSchema: yup.object({
+            name: yup.string().required('Enter your name'),
 			email: yup.string().email('Invalid E-mail').required('Enter your e-mail'),
 			password: yup.string().required('Enter your password'),
             verifyPassword: yup.string().required('Verify your password')
 		}),
 
         onSubmit: (values) => {
-            console.log(values)
+            dispatch( registerUser(values) )
         }
     })
 
@@ -30,6 +36,17 @@ const LoginForm = () => {
             <h2 className="text-center text-2xl text-orange-500 font-bold">Create Account</h2>
 
             <div className="my-5">
+
+            <div className="field">
+                    <label htmlFor="name">Name</label>
+                    <input
+                        type="text"
+                        name="name"
+                        value={form.values.name}
+                        onChange={form.handleChange}
+                    />
+                    {form.errors.name && form.touched.name ? <Error msg={form.errors.name}/> : null}
+                </div>
 
                 <div className="field">
                     <label htmlFor="name">Email</label>
