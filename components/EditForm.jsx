@@ -75,7 +75,6 @@ const EditForm = ({product}) => {
                 <div className="field">
                     <label htmlFor="description">Description</label>
                     <textarea
-                        className="border border-gray-500 focus:outline-none rounded p-3"
                         name="description"
                         id=""
                         cols="30"

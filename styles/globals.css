@@ -31,8 +31,16 @@ a {
   @apply p-3 text-white text-xl rounded bg-sky-600 hover:bg-sky-500 transition-all duration-150
 }
 
-input[type="text"], input[type="number"]{
-  @apply p-2 focus:outline-none border border-gray-500 rounded
+input[type="text"], input[type="email"], input[type="password"], input[type="number"]{
+  @apply p-2 focus:outline-none border-b-4 border-orange-400 hover:border-orange-600 focus:border-orange-600
+}
+
+textarea{
+  @apply p-2 focus:outline-none border-4 border-orange-400 hover:border-orange-600 focus:border-orange-600
+}
+
+label{
+  @apply font-bold text-lg text-orange-500 py-2
 }
 
 .field{
