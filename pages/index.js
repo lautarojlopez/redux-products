@@ -15,10 +15,11 @@ export default function Home() {
 
   //Get products from state
   const products = useSelector(state => state.products.products)
+  const lodaing = useSelector(state => state.products.loading)
 
   return (
     <Layout>
-      <div className="my-5 w-8/12 m-auto">
+      <div className="my-5 w-full lg:w-8/12 m-auto">
         {
           products ? <ProductList products={products}/> : null
         }

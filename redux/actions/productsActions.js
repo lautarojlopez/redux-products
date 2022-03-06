@@ -90,3 +90,36 @@ export const deleteProductAction = (id) => {
         })
     }
 }
+
+//Get product by ID
+export const getProductById = (id) => {
+    return async (dispatch) => {
+        try {
+            const product = await axiosClient.get(`/products`, {params: {id: id}})
+            dispatch({
+                type: types.GET_EDIT_PRODUCT,
+                payload: product.data[0]
+            })
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}
+
+//Edit product
+export const editProduct = (product) => {
+    return async (dispatch) => {
+        try {
+            dispatch({
+                type: types.EDIT_PRODUCT
+            })
+            await axiosClient.put(`/products/${product.id}`, product)
+            dispatch({
+                type: types.EDIT_PRODUCT_SUCCESS
+            })
+            router.push('/')
+        } catch (error) {
+            console.log(error)
+        }
+    }
+}

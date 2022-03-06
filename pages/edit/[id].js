@@ -12,6 +12,9 @@ const Edit = () => {
     //Router object to get url query
     const router = useRouter()
 
+    //Get values from state
+    const product = useSelector(state => state.products.toEditProduct)
+
     useEffect(() => {
 
         //When router is ready, get product ID from query and call dispatch
@@ -24,7 +27,9 @@ const Edit = () => {
     return (
         <Layout>
             <div className='m-auto w-11/12 lg:w-6/12 xl:w-5/12'>
-                <EditForm />
+                {
+                    product ? <EditForm product={product} /> : null
+                }
             </div>
         </Layout>
     );

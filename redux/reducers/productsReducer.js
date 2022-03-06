@@ -3,7 +3,8 @@ import types from '../types'
 const initialState = {
     products: [],
     error: null,
-    loading: false
+    loading: false,
+    toEditProduct: null
 }
 
 export default function(state = initialState, action){
@@ -46,6 +47,22 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 products: state.products.filter(product => product.id !== action.payload)
+            }
+        case types.GET_EDIT_PRODUCT:
+            return{
+                ...state,
+                toEditProduct: action.payload
+            }
+        case types.EDIT_PRODUCT:
+            return{
+                ...state,
+                loading: true
+            }
+        case types.EDIT_PRODUCT_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                toEditProduct: null
             }
         default:
             return state
