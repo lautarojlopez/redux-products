@@ -35,8 +35,8 @@ const EditForm = ({product}) => {
     });
 
     return ( 
-        <form onSubmit={form.handleSubmit} className="flex flex-col my-5 shadow-lg rounded border border-gray-500 p-5">
-            <h2 className="text-center text-2xl">Edit Product</h2>
+        <form onSubmit={form.handleSubmit} className="flex flex-col my-5 shadow-lg rounded border border-gray-200 p-5">
+            <h2 className="text-center text-2xl text-orange-500 font-bold">Edit Product</h2>
             {error ? <Error msg="An error has occurred. Please try again."/> : null}
             <div className="my-5">
                 <div className="field">
