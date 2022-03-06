@@ -114,12 +114,28 @@ export const editProduct = (product) => {
                 type: types.EDIT_PRODUCT
             })
             await axiosClient.put(`/products/${product.id}`, product)
-            dispatch({
-                type: types.EDIT_PRODUCT_SUCCESS
+            Swal.fire(
+                'Saved',
+                'Product edited successfully.',
+                'success'
+            ).then((result) => {
+                if(result.isConfirmed){
+                    dispatch({
+                        type: types.EDIT_PRODUCT_SUCCESS
+                    })
+                    router.push('/')
+                }
             })
-            router.push('/')
         } catch (error) {
             console.log(error)
+            dispatch({
+                type: types.EDIT_PRODUCT_ERROR
+            })
+            Swal.fire(
+                'Ups...',
+                'Something went wront. Please try again.',
+                'error'
+            )
         }
     }
 }

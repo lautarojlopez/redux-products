@@ -28,7 +28,7 @@ const Edit = () => {
         <Layout>
             <div className='m-auto w-11/12 lg:w-6/12 xl:w-5/12'>
                 {
-                    product ? <EditForm product={product} /> : null
+                    product ? <EditForm product={product} /> : <p className='text-2xl text-center my-5'>Product not found.</p>
                 }
             </div>
         </Layout>

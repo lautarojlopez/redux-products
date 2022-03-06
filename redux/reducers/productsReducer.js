@@ -62,7 +62,14 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 loading: false,
-                toEditProduct: null
+                toEditProduct: null,
+                error: false
+            }
+        case types.EDIT_PRODUCT_ERROR:
+            return{
+                ...state,
+                loading: false,
+                error: true
             }
         default:
             return state
