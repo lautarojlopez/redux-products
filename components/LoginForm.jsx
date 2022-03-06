@@ -25,7 +25,7 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={form.handleSubmit} className="flex flex-col my-5 shadow-lg rounded border border-gray-500 p-5 bg-white">
-            <h2 className="text-center text-2xl">Log In</h2>
+            <h2 className="text-center text-2xl text-orange-500 font-bold">Log In</h2>
 
             <div className="my-5">
 
