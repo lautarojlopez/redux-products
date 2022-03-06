@@ -6,7 +6,7 @@ const ProductList = ({ products }) => {
 
     return (
         <Fragment>
-            <h2 className='text-4xl text-center my-5'>Products</h2>
+            <h2 className='text-4xl text-center my-5 text-orange-500 font-bold'>Products</h2>
             <div className='m-auto w-11/12'>
                 {
                     products.length > 0 ? products.map((product) => (
