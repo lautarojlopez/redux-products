@@ -3,8 +3,12 @@ import { useFormik } from 'formik'
 import * as yup from 'yup'
 import Error from '../components/Error'
 import Link from 'next/link'
+import { logIn } from '../redux/actions/authActions'
+import { useDispatch, useSelector } from 'react-redux'
 
 const LoginForm = () => {
+
+    const dispatch = useDispatch()
 
     const form = useFormik({
 
@@ -19,7 +23,7 @@ const LoginForm = () => {
 		}),
 
         onSubmit: (values) => {
-            console.log(values)
+            dispatch( logIn(values) )
         }
     })
 
