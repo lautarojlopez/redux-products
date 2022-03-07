@@ -5,6 +5,15 @@ import { updateProfile, signInWithEmailAndPassword } from "firebase/auth"
 import Swal from "sweetalert2"
 import router from 'next/router'
 
+//Clear any possible error message
+export const clearError = () => {
+    return (dispatch) => {
+        dispatch({
+            type: types.CLEAR_ERROR
+        })
+    }
+}
+
 //Register new user
 export const registerUser = (user) => {
     return async (dispatch) => {
@@ -77,18 +86,18 @@ export const logIn = (data) => {
                     router.push('/')
                 })
                 .catch((error) => {
-                    if(error.code === 'auth/wrong-password'){
+                    if (error.code === 'auth/wrong-password') {
                         dispatch({
                             type: types.LOGIN_USER_ERROR,
                             payload: "Wrong Password"
                         })
-                    } else if(error.code === 'auth/user-not-found'){
+                    } else if (error.code === 'auth/user-not-found') {
                         dispatch({
                             type: types.LOGIN_USER_ERROR,
                             payload: "Invalid User"
                         })
                     }
-                    
+
                 })
         } catch (error) {
 

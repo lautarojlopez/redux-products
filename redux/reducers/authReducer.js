@@ -9,6 +9,12 @@ const initialState = {
 export default function(state = initialState, action){
     switch (action.type) {
 
+        case types.CLEAR_ERROR:
+            return{
+                ...state,
+                error: false,
+                message: null
+            }
         case types.REGISTER_USER:
             return{
                 ...state,

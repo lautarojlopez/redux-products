@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import Error from '../components/Error'
@@ -6,10 +6,15 @@ import Link from 'next/link'
 import { useDispatch, useSelector } from 'react-redux'
 import { registerUser } from '../redux/actions/authActions'
 import Spinner from './Spinner'
+import { clearError } from '../redux/actions/authActions'
 
 const LoginForm = () => {
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch( clearError() )
+    }, [])
 
     //Get values from store
     const loading = useSelector(state => state.auth.loading)

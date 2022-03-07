@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import Error from '../components/Error'
@@ -6,10 +6,15 @@ import Link from 'next/link'
 import { logIn } from '../redux/actions/authActions'
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from './Spinner'
+import { clearError } from '../redux/actions/authActions'
 
 const LoginForm = () => {
 
     const dispatch = useDispatch()
+
+    useEffect(() => {
+        dispatch( clearError() )
+    }, [])
 
     //Get values from store
     const error = useSelector(state => state.auth.error)
@@ -38,7 +43,7 @@ const LoginForm = () => {
             <h2 className="text-center text-2xl text-orange-500 font-bold">Log In</h2>
 
             {
-                error ? <Error msg={message}/> : null
+                error ? <Error msg={message} /> : null
             }
 
             <div className="my-5">
