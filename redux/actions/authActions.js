@@ -1,6 +1,6 @@
 import types from "../types"
 import { db } from '../../config/firebase'
-import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, setPersistence, browserLocalPersistence, signOut } from 'firebase/auth'
 import Swal from "sweetalert2"
 import router from 'next/router'
 
@@ -27,7 +27,7 @@ export const registerUser = (user) => {
                 await createUserWithEmailAndPassword(auth, user.email, user.password)
                     .then(async (credentials) => {
                         //Set user displayName
-                        await updateProfile(auth.currentUser, {displayName: user.name})
+                        await updateProfile(auth.currentUser, { displayName: user.name })
                         dispatch({
                             type: types.REGISTER_USER_SUCCESS
                         })
@@ -103,5 +103,14 @@ export const logIn = (data) => {
         } catch (error) {
 
         }
+    }
+}
+
+//Log out user
+export const logOutAction = (auth) => {
+    return async (dispatch) => {
+        await signOut(auth).then(() => {
+            router.push('/')
+        })
     }
 }
