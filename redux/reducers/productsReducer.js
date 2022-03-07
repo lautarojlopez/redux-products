@@ -71,6 +71,18 @@ export default function(state = initialState, action){
                 loading: false,
                 error: true
             }
+        case types.CLEAR_STATE:
+            return{
+                ...state,
+                loading: false,
+                error: null,
+                toEditProduct: null
+            }
+        case types.SORT_BY_NAME:
+            return{
+                ...state,
+                products: state.products.reverse()
+            }
         default:
             return state
     }

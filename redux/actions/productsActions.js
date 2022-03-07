@@ -71,6 +71,15 @@ export const getProducts = () => {
     }
 }
 
+//Clear state
+export const clearState = () => {
+    return dispatch => {
+        dispatch({
+            type: types.CLEAR_STATE
+        })
+    }
+}
+
 //Delete product by ID
 export const deleteProductAction = (id) => {
     return (dispatch) => {
@@ -180,5 +189,14 @@ export const editProduct = (product) => {
                 'error'
             )
         }
+    }
+}
+
+//Sort products by name
+export const sortByName = () => {
+    return (dispatch) => {
+        dispatch({
+            type: types.SORT_BY_NAME
+        })
     }
 }
