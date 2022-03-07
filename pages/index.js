@@ -3,14 +3,25 @@ import { useEffect } from "react"
 import Layout from "../components/Layout"
 import ProductList from "../components/ProductList"
 import { getProducts } from "../redux/actions/productsActions"
+import { app } from '../config/firebase'
+import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import router from 'next/router'
 
 export default function Home() {
 
   const dispatch = useDispatch()
 
+  const auth = getAuth()
+
   useEffect(() => {
-    //Request to API
-    dispatch(getProducts())
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        //Request to API
+        dispatch(getProducts())
+      } else {
+        router.push('/login')
+      }
+    })
   }, [])
 
   //Get products from state
@@ -21,7 +32,7 @@ export default function Home() {
     <Layout>
       <div className="my-5 w-full lg:w-8/12 m-auto">
         {
-          products ? <ProductList products={products}/> : null
+          products ? <ProductList products={products} /> : null
         }
       </div>
     </Layout>

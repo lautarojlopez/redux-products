@@ -1,7 +1,6 @@
 import types from "../types"
 import { db } from '../../config/firebase'
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth'
-import { updateProfile, signInWithEmailAndPassword } from "firebase/auth"
+import { getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, setPersistence, browserLocalPersistence } from 'firebase/auth'
 import Swal from "sweetalert2"
 import router from 'next/router'
 
@@ -75,29 +74,32 @@ export const logIn = (data) => {
     return async (dispatch) => {
         const auth = getAuth()
         try {
-            dispatch({
-                type: types.LOGIN_USER
-            })
-            await signInWithEmailAndPassword(auth, data.email, data.password)
-                .then(() => {
+            await setPersistence(auth, browserLocalPersistence)
+                .then(async () => {
                     dispatch({
-                        type: types.LOGIN_USER_SUCCESS
+                        type: types.LOGIN_USER
                     })
-                    router.push('/')
-                })
-                .catch((error) => {
-                    if (error.code === 'auth/wrong-password') {
-                        dispatch({
-                            type: types.LOGIN_USER_ERROR,
-                            payload: "Wrong Password"
+                    await signInWithEmailAndPassword(auth, data.email, data.password)
+                        .then(() => {
+                            dispatch({
+                                type: types.LOGIN_USER_SUCCESS
+                            })
+                            router.push('/')
                         })
-                    } else if (error.code === 'auth/user-not-found') {
-                        dispatch({
-                            type: types.LOGIN_USER_ERROR,
-                            payload: "Invalid User"
-                        })
-                    }
+                        .catch((error) => {
+                            if (error.code === 'auth/wrong-password') {
+                                dispatch({
+                                    type: types.LOGIN_USER_ERROR,
+                                    payload: "Wrong Password"
+                                })
+                            } else if (error.code === 'auth/user-not-found') {
+                                dispatch({
+                                    type: types.LOGIN_USER_ERROR,
+                                    payload: "Invalid User"
+                                })
+                            }
 
+                        })
                 })
         } catch (error) {
 
