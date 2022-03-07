@@ -128,10 +128,8 @@ export const getProductById = (id) => {
             const productsRef = collection(db, 'products')
             const productQuery = query(productsRef, where('id', '==', id))
             const product = await getDocs(productQuery).then((snapshot) => {
-                console.log(snapshot.docs[0].id)
                 return snapshot.docs[0].data()
             })
-            console.log(product)
             dispatch({
                 type: types.GET_EDIT_PRODUCT,
                 payload: product
