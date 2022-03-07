@@ -4,8 +4,9 @@ import Layout from "../components/Layout"
 import ProductList from "../components/ProductList"
 import { getProducts } from "../redux/actions/productsActions"
 import { app } from '../config/firebase'
-import { getAuth, onAuthStateChanged } from 'firebase/auth'
+import { getAuth } from 'firebase/auth'
 import router from 'next/router'
+import { clearState } from "../redux/actions/productsActions"
 
 export default function Home() {
 
@@ -14,6 +15,7 @@ export default function Home() {
   const auth = getAuth()
 
   useEffect(() => {
+    dispatch(clearState())
     auth.onAuthStateChanged((user) => {
       if (user) {
         //Request to API

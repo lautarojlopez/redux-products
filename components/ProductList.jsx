@@ -1,7 +1,7 @@
 import React from 'react'
 import Product from './Product'
 import { Fragment } from 'react'
-import { sortByName } from '../redux/actions/productsActions'
+import { sortByName, sortByPrice, sortByCode } from '../redux/actions/productsActions'
 import { useDispatch, useSelector } from 'react-redux'
 import Spinner from '../components/Spinner'
 
@@ -12,8 +12,14 @@ const ProductList = ({ products }) => {
     //Get values from store
     const loading = useSelector(state => state.products.loading)
 
-    const sortProductsByName = () => {
-        dispatch( sortByName() )
+    const sortProductsByName = (products) => {
+        dispatch( sortByName(products) )
+    }
+    const sortProductsByPrice = (products) => {
+        dispatch( sortByPrice(products) )
+    }
+    const sortProductsByCode = (products) => {
+        dispatch( sortByCode(products) )
     }
 
     return (
@@ -21,9 +27,9 @@ const ProductList = ({ products }) => {
             <h2 className='text-4xl text-center my-5 text-orange-500 font-bold'>Products</h2>
 
             <div className='flex m-auto justify-center items-center'>
-                <button onClick={() => sortProductsByName()} className='btn mr-3'>Name <i className="fas fa-arrow-up text-lg"></i></button>
-                <button className='btn mr-3'>Price <i className="fas fa-arrow-up text-lg"></i></button>
-                <button className='btn'>Code <i className="fas fa-arrow-up text-lg"></i></button>
+                <button onClick={() => sortProductsByName(products)} className='btn mr-3'>Name <i className="fas fa-arrow-down text-lg"></i></button>
+                <button onClick={() => sortProductsByPrice(products)} className='btn mr-3'>Price <i className="fas fa-arrow-down text-lg"></i></button>
+                <button onClick={() => sortProductsByCode(products)} className='btn'>Code <i className="fas fa-arrow-down text-lg"></i></button>
             </div>
 
             <div className='m-auto w-11/12'>

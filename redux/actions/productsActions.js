@@ -1,9 +1,8 @@
 import types from '../types'
-import axiosClient from '../../config/axios'
 import router from 'next/router'
 import Swal from 'sweetalert2'
 import { app, db } from '../../config/firebase'
-import { addDoc, collection, getDocs, query, where, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { addDoc, collection, getDocs, query, where, deleteDoc, doc, updateDoc } from 'firebase/firestore'
 import { getAuth } from 'firebase/auth'
 
 //Add new product
@@ -12,6 +11,8 @@ export const addProductAction = (product) => {
         dispatch({ type: types.ADD_PRODUCT })
         try {
             //Post product
+            //Parse price from string to nomber
+            product.price = Number(product.price)
             const productsRef = collection(db, 'products')
             await addDoc(productsRef, product).then(() => {
                 Swal.fire(
@@ -63,7 +64,7 @@ export const getProducts = () => {
                 payload: products
             })
         } catch (error) {
-            console.log(error);
+            console.log(error)
             dispatch({
                 type: types.GET_PRODUCTS_ERROR
             })
@@ -193,10 +194,58 @@ export const editProduct = (product) => {
 }
 
 //Sort products by name
-export const sortByName = () => {
+export const sortByName = (products) => {
     return (dispatch) => {
+        products = [...products].sort((a, b) => {
+            let fa = a.name.toLowerCase(),
+                fb = b.name.toLowerCase()
+        
+            if (fa < fb) {
+                return -1
+            }
+            if (fa > fb) {
+                return 1
+            }
+            return 0
+        })
         dispatch({
-            type: types.SORT_BY_NAME
+            type: types.SORT_BY_NAME,
+            payload: products
+        })
+    }
+}
+
+//Sort by price
+export const sortByPrice = (products) => {
+    return (dispatch) => {
+        products = [...products].sort((a, b) => {
+            return a.price - b.price
+        })
+        dispatch({
+            type: types.SORT_BY_PRICE,
+            payload: products
+        })
+    }
+}
+
+//Sort by code
+export const sortByCode = (products) => {
+    return (dispatch) => {
+        products = [...products].sort((a, b) => {
+            let fa = a.code.toLowerCase(),
+                fb = b.code.toLowerCase()
+        
+            if (fa < fb) {
+                return -1
+            }
+            if (fa > fb) {
+                return 1
+            }
+            return 0
+        })
+        dispatch({
+            type: types.SORT_BY_CODE,
+            payload: products
         })
     }
 }

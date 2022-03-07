@@ -4,7 +4,10 @@ const initialState = {
     products: [],
     error: null,
     loading: false,
-    toEditProduct: null
+    toEditProduct: null,
+    alphabeticallySort: null,
+    priceSort: null,
+    codeSort: null
 }
 
 export default function(state = initialState, action){
@@ -81,7 +84,17 @@ export default function(state = initialState, action){
         case types.SORT_BY_NAME:
             return{
                 ...state,
-                products: state.products.reverse()
+                products: action.payload
+            }
+        case types.SORT_BY_PRICE:
+            return{
+                ...state,
+                products: action.payload
+            }
+        case types.SORT_BY_CODE:
+            return{
+                ...state,
+                products: action.payload
             }
         default:
             return state
