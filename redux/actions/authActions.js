@@ -27,8 +27,7 @@ export const registerUser = (user) => {
                 await createUserWithEmailAndPassword(auth, user.email, user.password)
                     .then(async (credentials) => {
                         //Set user displayName
-                        credentials.user.displayName = user.name
-                        await updateProfile(auth, credentials)
+                        await updateProfile(auth.currentUser, {displayName: user.name})
                         dispatch({
                             type: types.REGISTER_USER_SUCCESS
                         })
