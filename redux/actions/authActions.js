@@ -30,6 +30,7 @@ export const registerUser = (user) => {
                             'success'
                         ).then((result) => {
                             if (result.isConfirmed) {
+                                logIn(user)
                                 router.push('/')
                             }
                         })
