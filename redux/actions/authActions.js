@@ -35,13 +35,12 @@ export const registerUser = (user) => {
                         })
                     })
                     .catch((error) => {
-                        console.log(error.message)
-                        if (error.message === 'Firebase: Password should be at least 6 characters (auth/weak-password).') {
+                        if (error.code === 'auth/weak-password') {
                             dispatch({
                                 type: types.REGISTER_USER_ERROR,
                                 payload: 'Password should be at least 6 characters'
                             })
-                        } else if (error.message === 'Firebase: Error (auth/email-already-in-use).') {
+                        } else if (error.code === 'auth/email-already-in-use') {
                             dispatch({
                                 type: types.REGISTER_USER_ERROR,
                                 payload: 'E-mail already in use'
@@ -66,12 +65,29 @@ export const logIn = (data) => {
     return async (dispatch) => {
         const auth = getAuth()
         try {
+            dispatch({
+                type: types.LOGIN_USER
+            })
             await signInWithEmailAndPassword(auth, data.email, data.password)
                 .then(() => {
+                    dispatch({
+                        type: types.LOGIN_USER_SUCCESS
+                    })
                     router.push('/')
                 })
                 .catch((error) => {
-                    console.log(error)
+                    if(error.code === 'auth/wrong-password'){
+                        dispatch({
+                            type: types.LOGIN_USER_ERROR,
+                            payload: "Wrong Password"
+                        })
+                    } else if(error.code === 'auth/user-not-found'){
+                        dispatch({
+                            type: types.LOGIN_USER_ERROR,
+                            payload: "Invalid User"
+                        })
+                    }
+                    
                 })
         } catch (error) {
 

@@ -18,9 +18,29 @@ export default function(state = initialState, action){
             return{
                 ...state,
                 loading: false,
-                error: false
+                error: false,
+                message: null
             }
         case types.REGISTER_USER_ERROR:
+            return{
+                ...state,
+                loading: false,
+                error: true,
+                message: action.payload
+            }
+        case types.LOGIN_USER:
+            return{
+                ...state,
+                loading: true
+            }
+        case types.LOGIN_USER_SUCCESS:
+            return{
+                ...state,
+                loading: false,
+                error: false,
+                message: null
+            }
+        case types.LOGIN_USER_ERROR:
             return{
                 ...state,
                 loading: false,
