@@ -2,6 +2,9 @@ import types from '../types'
 import axiosClient from '../../config/axios'
 import router from 'next/router'
 import Swal from 'sweetalert2'
+import { app, db } from '../../config/firebase'
+import { addDoc, collection, getDocs, query, where, deleteDoc, doc, getDoc, updateDoc } from 'firebase/firestore'
+import { getAuth } from 'firebase/auth'
 
 //Add new product
 export const addProductAction = (product) => {
@@ -9,13 +12,22 @@ export const addProductAction = (product) => {
         dispatch({ type: types.ADD_PRODUCT })
         try {
             //Post product
-            await axiosClient.post('/products', product)
-            dispatch({
-                type: types.ADD_PRODUCT_SUCCESS,
-                payload: product
+            const productsRef = collection(db, 'products')
+            await addDoc(productsRef, product).then(() => {
+                Swal.fire(
+                    'Product added successfully',
+                    '',
+                    'success'
+                ).then((result) => {
+                    if (result.isConfirmed) {
+                        dispatch({
+                            type: types.ADD_PRODUCT_SUCCESS,
+                            payload: product
+                        })
+                        router.push('/')
+                    }
+                })
             })
-            //Redirect to home
-            router.push('/')
         } catch (error) {
             console.log(error)
             dispatch({
@@ -33,15 +45,23 @@ export const getProducts = () => {
             dispatch({
                 type: types.GET_PRODUCTS
             })
-            //Get products from API
-            const products = await axiosClient.get("/products")
-
+            //Get products from Firestore
+            const auth = getAuth()
+            const currentUser = auth.currentUser
+            const products = []
+            const productsRef = collection(db, 'products')
+            const productsQuery = query(productsRef, where('user', "==", currentUser.uid))
+            await getDocs(productsQuery).then((snapshot) => {
+                //Push every product doc into products array
+                snapshot.docs.forEach(product => {
+                    products.push(product.data())
+                })
+            })
             //Set products in state
             dispatch({
                 type: types.GET_PRODUCTS_SUCCESS,
-                payload: products.data
+                payload: products
             })
-
         } catch (error) {
             console.log(error);
             dispatch({
@@ -67,16 +87,26 @@ export const deleteProductAction = (id) => {
             if (result.isConfirmed) {
                 //Delete product
                 try {
-                    await axiosClient.delete(`/products/${id}`)
-                    dispatch({
-                        type: types.DELETE_PRODUCT,
-                        payload: id
+                    //Get product from Firestore
+                    const productsRef = collection(db, 'products')
+                    const productsQuery = query(productsRef, where('id', '==', id))
+                    await getDocs(productsQuery).then((snapshot) => {
+                        //Push every product doc into products array
+                        snapshot.docs.forEach(async product => {
+                            await deleteDoc(doc(db, 'products', product.id))
+                                .then(() => {
+                                    dispatch({
+                                        type: types.DELETE_PRODUCT,
+                                        payload: id
+                                    })
+                                    Swal.fire(
+                                        'Deleted!',
+                                        'Your file has been deleted.',
+                                        'success'
+                                    )
+                                })
+                        })
                     })
-                    Swal.fire(
-                        'Deleted!',
-                        'Your file has been deleted.',
-                        'success'
-                    )
                 } catch (error) {
                     console.log(error)
                     Swal.fire(
@@ -95,10 +125,16 @@ export const deleteProductAction = (id) => {
 export const getProductById = (id) => {
     return async (dispatch) => {
         try {
-            const product = await axiosClient.get(`/products`, {params: {id: id}})
+            const productsRef = collection(db, 'products')
+            const productQuery = query(productsRef, where('id', '==', id))
+            const product = await getDocs(productQuery).then((snapshot) => {
+                console.log(snapshot.docs[0].id)
+                return snapshot.docs[0].data()
+            })
+            console.log(product)
             dispatch({
                 type: types.GET_EDIT_PRODUCT,
-                payload: product.data[0]
+                payload: product
             })
         } catch (error) {
             console.log(error)
@@ -113,19 +149,28 @@ export const editProduct = (product) => {
             dispatch({
                 type: types.EDIT_PRODUCT
             })
-            await axiosClient.put(`/products/${product.id}`, product)
-            Swal.fire(
-                'Saved',
-                'Product edited successfully.',
-                'success'
-            ).then((result) => {
-                if(result.isConfirmed){
-                    dispatch({
-                        type: types.EDIT_PRODUCT_SUCCESS
-                    })
-                    router.push('/')
-                }
+            //Get product from Firestore
+            const productsRef = collection(db, 'products')
+            const productQuery = query(productsRef, where('id', '==', product.id))
+            const productSnap = await getDocs(productQuery).then(snapshot => {
+                return snapshot.docs[0]
             })
+            //Save changes
+            await updateDoc(doc(db, 'products', productSnap.id), product)
+                .then(() => {
+                    Swal.fire(
+                        'Saved',
+                        'Product edited successfully.',
+                        'success'
+                    ).then((result) => {
+                        if (result.isConfirmed) {
+                            dispatch({
+                                type: types.EDIT_PRODUCT_SUCCESS
+                            })
+                            router.push('/')
+                        }
+                    })
+                })
         } catch (error) {
             console.log(error)
             dispatch({
