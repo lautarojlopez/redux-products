@@ -78,7 +78,7 @@ const LoginForm = () => {
                 </button>
             }
 
-            <Link href="/register"><a className='font-bold text-orange-500 text-center text-lg my-5'>Don't have an account? Create one</a></Link>
+            <Link href="/register"><a className='font-bold text-orange-500 text-center text-lg my-5'>Don&quot;t have an account? Create one</a></Link>
 
         </form>
     );
