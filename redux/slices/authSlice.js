@@ -127,4 +127,9 @@ export const logOut = (auth) => {
     }
 }
 
+//SELECTORS
+export const authLoadingSelector = (state) => state.auth.loading
+export const authErrorSelector = (state) => state.auth.error
+export const authMessageSelector = (state) => state.auth.message
+
 export default authSlice.reducer

@@ -288,4 +288,10 @@ export const sortProductsByCode = (products) => {
     }
 }
 
+//SELECTORS
+export const productsArraySelector = (state) => state.products.products
+export const productsErrorSelector = (state) => state.products.error
+export const productsLoadingSelector = (state) => state.products.loading
+export const productToEditSelector = (state) => state.products.toEditProduct
+
 export default createSlice.reducer
