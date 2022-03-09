@@ -55,7 +55,7 @@ export const { ...actions } = productsSlice.actions
 //FUNCTIONS
 //Get user's products
 export const getUserProducts = () => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(actions.startLoading())
         try {
             //Get current user ID
@@ -87,7 +87,7 @@ export const getUserProducts = () => {
 
 //Add product
 export const addProduct = (product) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(actions.startLoading())
         try {
             //Parse price from string to nomber
@@ -128,7 +128,7 @@ export const addProduct = (product) => {
 
 //Delete product by ID
 export const deleteProduct = (id) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         //Show confirm modal
         Swal.fire({
             title: 'Are you sure?',
@@ -179,7 +179,7 @@ export const deleteProduct = (id) => {
 
 //Get product by ID
 export const getProductById = (id) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         try {
             //Get product from Firestore database
             const productsRef = collection(db, 'products')
@@ -198,7 +198,7 @@ export const getProductById = (id) => {
 
 //Edit product
 export const editProduct = (product) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         dispatch(actions.startLoading())
         try {
             //Get product from Firestore
@@ -242,7 +242,7 @@ export const editProduct = (product) => {
 
 //Sort products by name
 export const sortProductsByName = (products) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         products = [...products].sort((a, b) => {
             let fa = a.name.toLowerCase(),
                 fb = b.name.toLowerCase()
@@ -261,7 +261,7 @@ export const sortProductsByName = (products) => {
 
 //Sort products by price
 export const sortProductsByPrice = (products) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         products = [...products].sort((a, b) => {
             return a.price - b.price
         })
@@ -271,7 +271,7 @@ export const sortProductsByPrice = (products) => {
 
 //Sort products by code
 export const sortProductsByCode = (products) => {
-    return (dispatch) => {
+    return async (dispatch) => {
         products = [...products].sort((a, b) => {
             let fa = a.code.toLowerCase(),
                 fb = b.code.toLowerCase()
