@@ -8,8 +8,8 @@ export const authSlice = createSlice({
     name: 'auth',
     initialState: {
         loading: false,
-        error: null,
-        message: null
+        error: false,
+        message: ''
     },
     reducer: {
         setLoading: (state, action) => {
@@ -43,7 +43,7 @@ export const registerUser = (user) => {
                         await updateProfile(auth.currentUser, { displayName: user.name })
                         dispatch(actions.setError(false))
                         dispatch(actions.setLoading(false))
-                        dispatch(actions.setMessage(null))
+                        dispatch(actions.setMessage(''))
                         //Show modal with success message
                         Swal.fire(
                             'Your account has been created!',
@@ -93,7 +93,7 @@ export const logIn = (user) => {
                         .then(() => {
                             dispatch(actions.setLoading(false))
                             dispatch(actions.setError(false))
-                            dispatch(actions.setMessage(null))
+                            dispatch(actions.setMessage(''))
                             //Redirect to home
                             router.push('/')
                         })

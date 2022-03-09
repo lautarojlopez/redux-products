@@ -9,7 +9,7 @@ export const productsSlice = createSlice({
     name: 'products',
     initialState: {
         products: [],
-        error: null,
+        error: false,
         loading: false,
         toEditProduct: null,
     },
@@ -40,7 +40,7 @@ export const productsSlice = createSlice({
         },
         clearState: (state) => {
             state.loading = false
-            state.error = null
+            state.error = false
             state.toEditProduct = null
         },
         sortProducts: (state, action) => {
