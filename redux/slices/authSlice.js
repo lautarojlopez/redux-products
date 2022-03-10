@@ -97,7 +97,7 @@ export const logIn = (user) => {
                         .then(() => {
                             dispatch(actions.setLoading(false))
                             dispatch(actions.setError(false))
-                            dispatch(actions.setMessage('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'))
+                            dispatch(actions.setMessage(''))
                             //Redirect to home
                             router.push('/')
                         })
