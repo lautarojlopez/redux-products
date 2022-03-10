@@ -1,4 +1,5 @@
 import React from 'react'
+//Components
 import RegistrationForm from '../../components/RegistrationForm'
 
 const Login = () => {

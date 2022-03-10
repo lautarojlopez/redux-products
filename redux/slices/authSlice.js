@@ -9,17 +9,21 @@ export const authSlice = createSlice({
     initialState: {
         loading: false,
         error: false,
-        message: ''
+        message: null
     },
-    reducer: {
+    reducers: {
         setLoading: (state, action) => {
             state.loading = action.payload
         },
         setError: (state, action) => {
-            state.loading = action.payload
+            state.error = action.payload
         },
         setMessage: (state, action) => {
             state.message = action.payload
+        },
+        clearError: (state) => {
+            state.error = false
+            state.message = null
         }
     }
 })
@@ -93,11 +97,12 @@ export const logIn = (user) => {
                         .then(() => {
                             dispatch(actions.setLoading(false))
                             dispatch(actions.setError(false))
-                            dispatch(actions.setMessage(''))
+                            dispatch(actions.setMessage('aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa'))
                             //Redirect to home
                             router.push('/')
                         })
                         .catch((error) => {
+                            console.log(error);
                             if (error.code === 'auth/wrong-password') { //If password is wrong
                                 dispatch(actions.setLoading(false))
                                 dispatch(actions.setError(true))

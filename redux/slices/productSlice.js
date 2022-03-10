@@ -13,7 +13,7 @@ export const productsSlice = createSlice({
         loading: false,
         toEditProduct: null,
     },
-    reducer: {
+    reducers: {
         startLoading: (state) => {
             state.loading = true
         },
@@ -294,4 +294,4 @@ export const productsErrorSelector = (state) => state.products.error
 export const productsLoadingSelector = (state) => state.products.loading
 export const productToEditSelector = (state) => state.products.toEditProduct
 
-export default createSlice.reducer
+export default productsSlice.reducer

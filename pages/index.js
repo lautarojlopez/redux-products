@@ -1,12 +1,17 @@
-import { useDispatch, useSelector } from "react-redux"
-import { useEffect } from "react"
-import Layout from "../components/Layout"
-import ProductList from "../components/ProductList"
-import { getProducts } from "../redux/actions/productsActions"
+import React, { useEffect } from "react"
+import router from 'next/router'
+//Firebase
 import { app } from '../config/firebase'
 import { getAuth } from 'firebase/auth'
-import router from 'next/router'
-import { clearState } from "../redux/actions/productsActions"
+//Components
+import Layout from "../components/Layout"
+import ProductList from "../components/ProductList"
+//Redux
+import { useDispatch, useSelector } from "react-redux"
+//Actions
+import { getUserProducts } from "../redux/slices/productSlice"
+//Selectors
+import { productsArraySelector } from "../redux/slices/productSlice"
 
 export default function Home() {
 
@@ -15,11 +20,10 @@ export default function Home() {
   const auth = getAuth()
 
   useEffect(() => {
-    dispatch(clearState())
     auth.onAuthStateChanged((user) => {
       if (user) {
         //Request to API
-        dispatch(getProducts())
+        dispatch(getUserProducts())
       } else {
         router.push('/login')
       }
@@ -27,8 +31,7 @@ export default function Home() {
   }, [])
 
   //Get products from state
-  const products = useSelector(state => state.products.products)
-  const lodaing = useSelector(state => state.products.loading)
+  const products = useSelector(productsArraySelector)
 
   return (
     <Layout>

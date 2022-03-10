@@ -1,15 +1,21 @@
 import React from "react"
+//Dependencies
+import shortid from "shortid"
+//Forms and validations
 import { useFormik } from "formik"
 import * as yup from 'yup'
-import { useDispatch, useSelector } from "react-redux"
-import Error from "./Error"
+//Firebase
 import { app } from "../config/firebase"
 import { getAuth } from "firebase/auth"
+//Components
+import Error from "./Error"
 import Spinner from "./Spinner"
-import shortid from "shortid"
-
-//Redux actions
-import { addProductAction } from "../redux/actions/productsActions"
+//Redux
+import { useDispatch, useSelector } from "react-redux"
+//Actions
+import { addProduct } from "../redux/slices/productSlice"
+//Selectos
+import { productsErrorSelector, productsLoadingSelector } from "../redux/slices/productSlice"
 
 const AddForm = () => {
 
@@ -17,8 +23,8 @@ const AddForm = () => {
     const dispatch = useDispatch()
 
     //State values
-    const error = useSelector(state => state.products.error)
-    const loading = useSelector(state => state.products.loading)
+    const error = useSelector(productsErrorSelector)
+    const loading = useSelector(productsLoadingSelector)
 
     //Get current user
     const auth = getAuth()
@@ -41,7 +47,7 @@ const AddForm = () => {
         onSubmit: (product) => {
             product.user = currentUser.uid
             product.id = shortid.generate()
-            dispatch(addProductAction(product))
+            dispatch(addProduct(product))
         }
     })
 
