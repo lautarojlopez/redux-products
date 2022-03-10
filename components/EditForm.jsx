@@ -1,9 +1,16 @@
 import React from 'react'
-import { useDispatch, useSelector } from 'react-redux'
+//Forms and validations
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+//Components
 import Error from './Error'
-import { editProduct } from '../redux/actions/productsActions'
+import Spinner from './Spinner'
+//Redux
+import { useDispatch, useSelector } from 'react-redux'
+//Actions
+import { editProduct } from '../redux/slices/productSlice'
+//Selectors
+import { productsLoadingSelector, productsErrorSelector } from '../redux/slices/productSlice'
 
 const EditForm = ({product}) => {
 
@@ -12,7 +19,8 @@ const EditForm = ({product}) => {
     const dispatch = useDispatch()
 
     //State values
-    const error = useSelector(state => state.products.error)
+    const error = useSelector(productsErrorSelector)
+    const loading = useSelector(productsLoadingSelector)
 
 
     const form = useFormik({
@@ -86,7 +94,9 @@ const EditForm = ({product}) => {
                 </div>
             </div>
 
-            <button type="submit" className='btn w-10/12 m-auto'>Save <i className='fas fa-save'></i></button>
+            {
+                loading ? <Spinner /> : <button type="submit" className='btn w-10/12 m-auto'>Save <i className='fas fa-save'></i></button>
+            }
 
         </form>
      )

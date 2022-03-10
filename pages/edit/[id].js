@@ -1,9 +1,14 @@
 import React, { useEffect } from 'react'
+import { useRouter } from 'next/dist/client/router'
+//Components
 import Layout from '../../components/Layout'
 import EditForm from '../../components/EditForm'
+//Redux
 import { useDispatch, useSelector } from 'react-redux'
-import { useRouter } from 'next/dist/client/router'
-import { getProductById } from '../../redux/actions/productsActions'
+//Actions
+import { getProductById } from '../../redux/slices/productSlice'
+//Selectors
+import { productToEditSelector } from '../../redux/slices/productSlice'
 
 const Edit = () => {
 
@@ -13,7 +18,7 @@ const Edit = () => {
     const router = useRouter()
 
     //Get values from state
-    const product = useSelector(state => state.products.toEditProduct)
+    const product = useSelector(productToEditSelector)
 
     useEffect(() => {
 

@@ -1,25 +1,31 @@
 import React, { useEffect } from 'react'
+import Link from 'next/link'
+//Forms and validations
 import { useFormik } from 'formik'
 import * as yup from 'yup'
+//Components
 import Error from '../components/Error'
-import Link from 'next/link'
-import { logIn } from '../redux/actions/authActions'
-import { useDispatch, useSelector } from 'react-redux'
 import Spinner from './Spinner'
-import { clearError } from '../redux/actions/authActions'
+//Redux
+import { useDispatch, useSelector } from 'react-redux'
+//Selectors
+import {authLoadingSelector, authErrorSelector, authMessageSelector} from '../redux/slices/authSlice'
+//Auth Actions
+import { logIn, actions } from '../redux/slices/authSlice'
 
 const LoginForm = () => {
 
     const dispatch = useDispatch()
 
+    //Clear any possible error
     useEffect(() => {
-        dispatch( clearError() )
-    }, [])
+        dispatch(actions.clearError())
+    }, [dispatch])
 
     //Get values from store
-    const error = useSelector(state => state.auth.error)
-    const message = useSelector(state => state.auth.message)
-    const loading = useSelector(state => state.auth.loading)
+    const error = useSelector(authErrorSelector)
+    const message = useSelector(authMessageSelector)
+    const loading = useSelector(authLoadingSelector)
 
     const form = useFormik({
 
